@@ -82,7 +82,8 @@ router.get("/types",async(req, res) =>{
 })
 
 router.post("/recipe", async(req, res) =>{
-    let {title,summary ,steps ,score,   } = req.body;
+    let {title,summary ,steps ,score, healthScore } = req.body; // traigo todo lo que viene por body , esto lo que va traer cuando se cree la receta
+    
 })
 
 module.exports = router;
