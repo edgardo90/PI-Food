@@ -30,6 +30,11 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    createdInDb:{ // con esto accede mas facil a la receta que cree en la base de tados(data base)
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true
+    }
 
   });
 };
