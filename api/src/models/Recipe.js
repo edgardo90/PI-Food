@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    healtScore:{ // este es el "nivel de comida saludable"
+    healthScore:{ // este es el "nivel de comida saludable"
       type: DataTypes.INTEGER,
       allowNull: true,
     },
