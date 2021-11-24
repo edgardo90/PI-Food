@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
     //   allowNull: false, // pongo en false para que sea obligatorio poner algo
     //   primaryKey: true, 
     // },
-    title: { // este es mi nombre
+    name: { // este es mi nombre
       type: DataTypes.STRING,
       allowNull: true,
     },
