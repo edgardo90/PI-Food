@@ -20,7 +20,7 @@ const getApiInfo = async () =>{
             title : r.title, // esto seria el name
             image : r.image,
             spoonacularScore : r.spoonacularScore, // esto seria puntuacion
-            healtScore : r.healtScore, // esto seria el nivel de comida saludable
+            healthScore : r.healthScore, // esto seria el nivel de comida saludable
             summary : r.summary, // esto seria el resumen del plato
             diets : r.diets.map(d =>{ // esto seria tipo de dieta
                 return {name: d } // va tener un objeto que "d" va ser el tipo de dieta
@@ -35,11 +35,11 @@ const getApiInfo = async () =>{
     return resultUrl
 }
 
-const getDbInfo = async () =>{         //aca voy traer lo que guardo en la base de datos(date base)
+const getDbInfo = async () =>{    //aca voy traer lo que guardo en la base de datos(date base)
     return await Recipe.findAll({
         include :{
             model: Diet,
-            attributes:["title"],
+            attributes:["name"],
             through:{
                 attributes: [],
             }
@@ -47,7 +47,7 @@ const getDbInfo = async () =>{         //aca voy traer lo que guardo en la base 
     })
 }
 
-const allData = async () =>{
+const allData = async () =>{ // con esto creo una funcion que trae todo lo que venga por la api de food
     const apiInfo = await getApiInfo();
     const dbInfo = await getDbInfo();
     const infoTotal = apiInfo.concat(dbInfo);
@@ -55,19 +55,34 @@ const allData = async () =>{
 }
 
 router.get("/recipes", async(req, res) =>{
-    const name = req.query.name;
-    let recetas = await allData();
-    if(name){
-        let nameReceta = await recetas.filter(r => r.title.toLowerCase().includes(name.toLowerCase()) );
-        if(nameReceta.length > 0){
-           return res.status(200).send(nameReceta);
+    const name = req.query.name; // busco por query name
+    let recetas = await allData(); // creo una varieble "recetas" que traiga todo con la funcion allData() que cree , "recetas" va ser un array con toda la informacion
+    if(name){ // si hay algo en name
+        let nameReceta = await recetas.filter(r => r.title.toLowerCase().includes(name.toLowerCase()) ); // hago un filter que traiga lo que tenga ese "name"
+        if(nameReceta.length > 0){ // como "nameReceta" es un array , me fijo si hay algo
+           return res.status(200).send(nameReceta); // si hay lo retorno con res.status()
         }else{
-           return res.status(404).send("No esta la receta ingresada")
+           return res.status(404).send("No esta la receta ingresada") // sino envio un error
         }
     }
-   return res.status(200).send(recetas)
+   return res.status(200).send(recetas) // si no hay nada por query , muestra todas las "recetas"
 })
 
+router.get("/types",async(req, res) =>{
+    const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`);
+    const totalDiets = apiUrl.data.results.map(a => a.diets).flat(2); // hago un map sobre el apiUrl.data.results que gaurde todas las dietas , como diets van hacer un array de array hago un flat()  
+    // console.log(totalDiets)
+    totalDiets.forEach(t =>{ // hago un forEach para iterar cada elemento =>"t"
+        Diet.findOrCreate({ // traigo el modelo Diet.js , utilizo el findOrCreate() para crear el elemento en mi base de datos, si ya esta no lo crea
+            where: {name : t} // creo el objeto where que tenga cada elemento => "t"
+        })
+    })
+    const allDiets = await Diet.findAll(); // guarda en "allDites" lo que esta en la tabla Diet.js con la funcion findall()
+    return res.send(allDiets); 
+})
 
+router.post("/recipe", async(req, res) =>{
+    let {title,summary ,steps ,score,   } = req.body;
+})
 
 module.exports = router;
