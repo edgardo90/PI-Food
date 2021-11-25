@@ -6,7 +6,7 @@ const axios = require("axios")
 const {API_KEY} = process.env
 //
 require("dotenv").config();
-const {Sequelize} = require("sequelize")
+const {Sequelize} = require("sequelize");
 
 const router = Router();
 
@@ -47,7 +47,7 @@ const getDbInfo = async () =>{    //aca voy traer lo que guardo en la base de da
     })
 }
 
-const allData = async () =>{ // con esto creo una funcion que trae todo lo que venga por la api de food
+const allData = async () =>{ // con esto creo una funcion que trae tadas las recetas lo que venga por la api de food
     const apiInfo = await getApiInfo();
     const dbInfo = await getDbInfo();
     const infoTotal = apiInfo.concat(dbInfo);
@@ -71,8 +71,13 @@ router.get("/recipes", async(req, res) =>{
 router.get("/types",async(req, res) =>{
     const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`);
     const totalDiets = apiUrl.data.results.map(a => a.diets).flat(2); // hago un map sobre el apiUrl.data.results que gaurde todas las dietas , como diets van hacer un array de array hago un flat()  
-    // console.log(totalDiets)
-    totalDiets.forEach(t =>{ // hago un forEach para iterar cada elemento =>"t"
+    console.log(totalDiets)
+    let dietsFilter = totalDiets.filter((element, index)=>{ // hago un filter para eleminar los elementos repetitivos en el array "totalDiets"
+        return totalDiets.indexOf(element) === index;
+    })
+    console.log(dietsFilter)
+    // dietsFilter.push("ovo vegetarian","low fodmap")
+    dietsFilter.forEach(t =>{ // hago un forEach para iterar cada elemento =>"t"
         Diet.findOrCreate({ // traigo el modelo Diet.js , utilizo el findOrCreate() para crear el elemento en mi base de datos, si ya esta no lo crea
             where: {name : t} // creo el objeto where que tenga cada elemento => "t"
         })
@@ -82,8 +87,44 @@ router.get("/types",async(req, res) =>{
 })
 
 router.post("/recipe", async(req, res) =>{
-    let {title,summary ,steps ,score, healthScore } = req.body; // traigo todo lo que viene por body , esto lo que va traer cuando se cree la receta
-    
+    let {title,
+        summary ,
+        steps ,
+        score,
+        healthScore,
+        createdInDb, 
+        diets } = req.body; // traigo todo lo que viene por body con destructuring , esto lo que va traer cuando se cree la receta
+        if(!title || !summary){
+            return res.status(404).send("Must have title and summary")
+        }
+    let recipeCreate = await Recipe.create({ // traigo mi models Recipe.js y usa la funcion create() para crear recipeCreate
+        title, 
+        summary, 
+        steps,
+        score, 
+        healthScore,
+        createdInDb,  
+    });
+    let dietsDb = await Diet.findAll({ // aca busto todas las diets que coincidan con la tabla Diet
+        where: {name: diets}
+    })
+    recipeCreate.addDiet(dietsDb); // agrego a la tabla Diet con addDiet lo que cree en dietsDb
+    return res.send("Recipe successfully created");
 })
+
+router.get("/recipes/:idReceta", async (req, res) =>{
+    const {idReceta} = req.params; // hago un destructuring para obtener "idReceta"
+    const recetasTotal = await allData(); // utilizo la funcion que cree allData() para traer todas las recetas
+    if(idReceta){ // si hay "idReceta"
+        // console.log(idReceta)
+        let recetaId = await recetasTotal.find( r => parseInt(r.id) === parseInt(idReceta)); // hago un find() para que me devuelva el primer valor que coincida con "idReceta"
+        // console.log(recetaId)
+        if(recetaId){ // si hay algo en "recetaId"
+            return res.status(200).send(recetaId); // lo devuelvo
+        }
+            res.status(404).send("This recipe has not been found");
+    }
+})
+
 
 module.exports = router;
