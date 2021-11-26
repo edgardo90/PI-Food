@@ -54,21 +54,35 @@ const allData = async () =>{ // con esto creo una funcion que trae tadas las rec
     return infoTotal
 }
 
-router.get("/recipes", async(req, res) =>{
+router.get("/recipes", async(req, res) =>{ // trae todas las recetas o trae un listado de recetas por el name de query
     const name = req.query.name; // busco por query name
     let recetas = await allData(); // creo una varieble "recetas" que traiga todo con la funcion allData() que cree , "recetas" va ser un array con toda la informacion
     if(name){ // si hay algo en name
         let nameReceta = await recetas.filter(r => r.title.toLowerCase().includes(name.toLowerCase()) ); // hago un filter que traiga lo que tenga ese "name"
         if(nameReceta.length > 0){ // como "nameReceta" es un array , me fijo si hay algo
-           return res.status(200).send(nameReceta); // si hay lo retorno con res.status()
+            return res.status(200).send(nameReceta); // si hay lo retorno con res.status()
         }else{
-           return res.status(404).send("No esta la receta ingresada") // sino envio un error
+            return res.status(404).send("No esta la receta ingresada") // sino envio un error
         }
     }
-   return res.status(200).send(recetas) // si no hay nada por query , muestra todas las "recetas"
+    return res.status(200).send(recetas) // si no hay nada por query , muestra todas las "recetas"
 })
 
-router.get("/types",async(req, res) =>{
+router.get("/recipes/:idReceta", async (req, res) =>{ // trae una receta particular por id
+    const {idReceta} = req.params; // hago un destructuring para obtener "idReceta"
+    const recetasTotal = await allData(); // utilizo la funcion que cree allData() para traer todas las recetas
+    if(idReceta){ // si hay "idReceta"
+        // console.log(idReceta)
+        let recetaId = await recetasTotal.find( r => parseInt(r.id) === parseInt(idReceta)); // hago un find() para que me devuelva el primer valor que coincida con "idReceta"
+        // console.log(recetaId)
+        if(recetaId){ // si hay algo en "recetaId"
+            return res.status(200).send(recetaId); // lo devuelvo
+        }
+          return res.status(404).send("This recipe has not been found");
+    }
+})
+
+router.get("/types",async(req, res) =>{ // obtengo todas las dietas posibles y lo guardo en mi base de datos
     const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`);
     const totalDiets = apiUrl.data.results.map(a => a.diets).flat(2); // hago un map sobre el apiUrl.data.results que gaurde todas las dietas , como diets van hacer un array de array hago un flat()  
     console.log(totalDiets)
@@ -86,7 +100,7 @@ router.get("/types",async(req, res) =>{
     return res.send(allDiets); 
 })
 
-router.post("/recipe", async(req, res) =>{
+router.post("/recipe", async(req, res) =>{ // recibo los datos por body y lo guardo en mi base de datos , creo la receta
     let {title,
         summary ,
         steps ,
@@ -110,20 +124,6 @@ router.post("/recipe", async(req, res) =>{
     })
     recipeCreate.addDiet(dietsDb); // agrego a la tabla Diet con addDiet lo que cree en dietsDb
     return res.send("Recipe successfully created");
-})
-
-router.get("/recipes/:idReceta", async (req, res) =>{
-    const {idReceta} = req.params; // hago un destructuring para obtener "idReceta"
-    const recetasTotal = await allData(); // utilizo la funcion que cree allData() para traer todas las recetas
-    if(idReceta){ // si hay "idReceta"
-        // console.log(idReceta)
-        let recetaId = await recetasTotal.find( r => parseInt(r.id) === parseInt(idReceta)); // hago un find() para que me devuelva el primer valor que coincida con "idReceta"
-        // console.log(recetaId)
-        if(recetaId){ // si hay algo en "recetaId"
-            return res.status(200).send(recetaId); // lo devuelvo
-        }
-            res.status(404).send("This recipe has not been found");
-    }
 })
 
 
