@@ -90,7 +90,7 @@ router.get("/types",async(req, res) =>{ // obtengo todas las dietas posibles y l
         return totalDiets.indexOf(element) === index;
     })
     console.log(dietsFilter)
-    // dietsFilter.push("ovo vegetarian","low fodmap")
+    dietsFilter.push("ovo vegetarian","low fodmap")
     dietsFilter.forEach(t =>{ // hago un forEach para iterar cada elemento =>"t"
         Diet.findOrCreate({ // traigo el modelo Diet.js , utilizo el findOrCreate() para crear el elemento en mi base de datos, si ya esta no lo crea
             where: {name : t} // creo el objeto where que tenga cada elemento => "t"
