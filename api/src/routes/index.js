@@ -85,12 +85,12 @@ router.get("/recipes/:idReceta", async (req, res) =>{ // trae una receta particu
 router.get("/types",async(req, res) =>{ // obtengo todas las dietas posibles y lo guardo en mi base de datos
     const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`);
     const totalDiets = apiUrl.data.results.map(a => a.diets).flat(2); // hago un map sobre el apiUrl.data.results que gaurde todas las dietas , como diets van hacer un array de array hago un flat()  
-    console.log(totalDiets)
+    // console.log(totalDiets)
     let dietsFilter = totalDiets.filter((element, index)=>{ // hago un filter para eleminar los elementos repetitivos en el array "totalDiets"
         return totalDiets.indexOf(element) === index;
     })
-    console.log(dietsFilter)
-    dietsFilter.push("ovo vegetarian","low fodmap")
+    // console.log(dietsFilter)
+    dietsFilter.push("vegetarian")
     dietsFilter.forEach(t =>{ // hago un forEach para iterar cada elemento =>"t"
         Diet.findOrCreate({ // traigo el modelo Diet.js , utilizo el findOrCreate() para crear el elemento en mi base de datos, si ya esta no lo crea
             where: {name : t} // creo el objeto where que tenga cada elemento => "t"
@@ -107,7 +107,8 @@ router.post("/recipe", async(req, res) =>{ // recibo los datos por body y lo gua
         score,
         healthScore,
         createdInDb, 
-        diets } = req.body; // traigo todo lo que viene por body con destructuring , esto lo que va traer cuando se cree la receta
+        diets,
+        image, } = req.body; // traigo todo lo que viene por body con destructuring , esto lo que va traer cuando se cree la receta
         if(!title || !summary){
             return res.status(404).send("Must have title and summary")
         }
@@ -117,7 +118,8 @@ router.post("/recipe", async(req, res) =>{ // recibo los datos por body y lo gua
         steps,
         score, 
         healthScore,
-        createdInDb,  
+        createdInDb,
+        image,  
     });
     let dietsDb = await Diet.findAll({ // aca busto todas las diets que coincidan con la tabla Diet
         where: {name: diets}
