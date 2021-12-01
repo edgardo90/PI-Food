@@ -19,7 +19,7 @@ const getApiInfo = async () =>{
             id : r.id,
             title : r.title, // esto seria el name
             image : r.image,
-            spoonacularScore : r.spoonacularScore, // esto seria puntuacion
+            score : r.spoonacularScore, // esto seria puntuacion
             healthScore : r.healthScore, // esto seria el nivel de comida saludable
             summary : r.summary, // esto seria el resumen del plato
             diets : r.diets.map(d =>{ // esto seria tipo de dieta
