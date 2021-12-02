@@ -1,4 +1,4 @@
-import {GET_RECIPES, GET_DIETS, FILTER_DIETS, ORDER_BY_TITLE} from "../actions/types"
+import {GET_RECIPES, GET_DIETS, FILTER_DIETS, ORDER_BY_TITLE, ORDER_BY_SCORE , GET_NAME_RECIPE, POST_RECIPE} from "../actions/types"
 
 const  initialState ={
     recipes:[],
@@ -8,18 +8,29 @@ const  initialState ={
 
 function reducer(state=initialState,{type , payload} ){
     switch(type){
-        case GET_RECIPES:
+        case GET_RECIPES: // obtengo todas las recetas 
             return {
                 ...state , 
                 recipes:payload,
                 copyRecipes: payload, 
 
-            } // lo que hago es que de mi state(estado) recipes es que un array vacio  manda todo lo que hace la funcion get_recipes, que va traer todas las recetas
+            } 
 
-        case GET_DIETS:
+        case GET_DIETS: // obtengo todas mis dietas de mi base de datos
             return{
                 ...state,
                 diets:payload,
+            }
+
+        case GET_NAME_RECIPE: // get para buscar receta por nombre
+            return{
+                 ...state,
+                recipes: payload,
+            }
+
+        case POST_RECIPE: // post para crear receta
+            return{
+                ...state
             }
 
         case FILTER_DIETS: // caso para filtrar por dieatas
@@ -35,7 +46,7 @@ function reducer(state=initialState,{type , payload} ){
                 recipes: statusFiltered,
             }
 
-        case ORDER_BY_TITLE: // caso para ordenar el nombre de la receta
+        case ORDER_BY_TITLE: // caso para ordenar el nombre de la receta de a-z or z-a
             let orderTitle = payload === "asc" ?
             state.recipes.sort(function(a,b){
                 if(a.title.toLowerCase() > b.title.toLowerCase()){
@@ -59,6 +70,16 @@ function reducer(state=initialState,{type , payload} ){
                 ...state,
                 recipes: orderTitle  
             }
+
+            case ORDER_BY_SCORE: // caso para ordenar segun el healthscore de mayor a menor or menor a mayor
+                let orderScore = payload === "men" ?
+                state.recipes.sort(function(a,b){return a.healthScore - b.healthScore})
+                :
+                state.recipes.sort(function(a,b){return b.healthScore - a.healthScore})
+                return{
+                    ...state,
+                    recipes: orderScore
+                }
             
             
         default: return state

@@ -16,12 +16,15 @@
 } 
 
 .landing button{
-  padding-left: 25px;/* agrando el button hacia la izquierda  */
-  padding-right: 25px; /* agrando el button hacia la derecha */
-  padding-top: 10px; /*agrando el button hacia arriba  */
-  padding-bottom: 10px; /* agrando el button hacia abajo */
-  margin-left: 47%;/*muevo el button hacia la derecha  */
-  margin-top: 5%;
+    position: absolute;
+    
+    display: flex;
+    padding-left: 25px;/* agrando el button hacia la izquierda  */
+    padding-right: 25px; /* agrando el button hacia la derecha */
+    padding-top: 10px; /*agrando el button hacia arriba  */
+    padding-bottom: 10px; /* agrando el button hacia abajo */
+    margin-left: 47%;/*muevo el button hacia la derecha  */
+    margin-top: 5%;
 }
 
 .btn{
