@@ -112,6 +112,12 @@ router.post("/recipe", async(req, res) =>{ // recibo los datos por body y lo gua
         if(!title || !summary){
             return res.status(404).send("Must have title and summary")
         }
+        if(!score){
+            score=0
+        }
+        if(!healthScore){
+            healthScore=0
+        }
     let recipeCreate = await Recipe.create({ // traigo mi models Recipe.js y usa la funcion create() para crear recipeCreate
         title, 
         summary, 
