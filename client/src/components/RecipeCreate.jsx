@@ -8,6 +8,8 @@ function validate(input){
     const errors={};
     if(!input.title){
         errors.title="You must enter a title"
+    }else if ( !/^[A-Z]+$/i.test(input.title)){
+        errors.title = "The title has to be only letters"
     }
     if(!input.summary){
         errors.summary="You must enter a summary"
@@ -18,8 +20,10 @@ function validate(input){
     if(input.healthScore > 100 || input.healthScore < 0){
         errors.healthScore="The health score must be greater than 0 and less than 100"
     }
-    if(!input.image.includes("https://") ){
+    if(input.image.length >0){
+        if(!input.image.includes("https://") ){
         errors.image= "no es una dirrecion valida"
+    }
     }
 
     return errors
@@ -67,8 +71,11 @@ export default function RecipeCreate(){
      function handleSubmit(event){
         event.preventDefault();
         if(!data.title || !data.summary){
-            alert("Completa la informacion solicitada")
-        }else{
+            return alert("Complete the title and summary information")
+        }
+        if(Object.values(errors).length > 0){
+            return alert("Check the errors that are in red !")
+        }
         dispatch(postRecipe(data));
         alert("Recipe create!");
         setData({
@@ -81,28 +88,8 @@ export default function RecipeCreate(){
             diets:[],
         })
         history.push("/home")
-      }
     }
 
-    // function handleSubmit(event){
-    //     if(data.title && data.summary){
-    //         event.preventDegault();
-    //         dispatch(postRecipe(data));
-    //         alert("Recipe create!");
-    //         setData({
-    //         title:"",
-    //         summary:"",
-    //         score:"",
-    //         healthScore:"",
-    //         image:"",
-    //         steps:"",
-    //         diets:[],
-    //     })
-    //     history.push("/home")
-    //     }else{
-    //         alert("completa la informacion")
-    //     }
-    // }
 
     return(
         <div>
@@ -177,6 +164,7 @@ export default function RecipeCreate(){
                 </div>
                 <div>
                     <select onChange={handleSelect}>
+                        <option value="select">Select type/S of diets</option>
                         {totalDiets && totalDiets.map(a =>{
                             return(
                                 <option value={a.name} key={a.id}>{a.name}</option>
@@ -186,7 +174,7 @@ export default function RecipeCreate(){
                 </div>
                 <ul><li>{  data.diets.map(d => d+"  ,") }</li> </ul>
 
-                <button  type="submit">Create recipe</button>
+                <button disabled={!data.title}  type="submit">Create recipe</button>
             </form>
         </div>
     )

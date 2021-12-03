@@ -99,7 +99,8 @@ export default function Home(){
                         <Card title={a.title} 
                         image={a.image}
                         key={a.id} 
-                        diets={a.diets.map(d => <p key={d.name}>{d.name}</p> )}
+                        diets={a.diets.map(d => ` ${d.name} `)}
+                        // diets={a.diets.map(d => <p key={d.name}>{d.name}</p> )}
                         />
                      </Link>
                         )
