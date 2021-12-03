@@ -3,6 +3,28 @@ import{Link, useHistory} from "react-router-dom"
 import {postRecipe , getDiets} from "../actions/index"
 import {useDispatch , useSelector} from "react-redux"
 
+
+function validate(input){
+    const errors={};
+    if(!input.title){
+        errors.title="You must enter a title"
+    }
+    if(!input.summary){
+        errors.summary="You must enter a summary"
+    }
+    if(input.score > 100 || input.score < 0){
+        errors.score="The score must be greater than 0 and less than 100"
+    }
+    if(input.healthScore > 100 || input.healthScore < 0){
+        errors.healthScore="The health score must be greater than 0 and less than 100"
+    }
+    if(!input.image.includes("https://") ){
+        errors.image= "no es una dirrecion valida"
+    }
+
+    return errors
+}
+
 export default function RecipeCreate(){
     const dispatch = useDispatch();
     const history = useHistory()
@@ -16,18 +38,23 @@ export default function RecipeCreate(){
         image:"",
         steps:"",
         diets:[],
-    })
+    });
+    const [errors, setErrors] = useState({});
 
     useEffect (()=>{ // useeffect del get de dietas para tener todos las dietas
         dispatch(getDiets());
     },[dispatch]);
 
     function handleChange(event){ //handle de los input y textarea
-        setData(prevData=>({
-            ...prevData,
+        setData(({
+            ...data,
             [event.target.name]: event.target.value
         }))
-        console.log(data)
+        // console.log(data)
+        setErrors(validate({ // errores
+            ...data,
+            [event.target.name]: event.target.value
+        }))
     }
 
     function handleSelect(event){ // handle del select de diets
@@ -37,8 +64,11 @@ export default function RecipeCreate(){
         })
     }
 
-    function handleSubmit(event){
+     function handleSubmit(event){
         event.preventDefault();
+        if(!data.title || !data.summary){
+            alert("Completa la informacion solicitada")
+        }else{
         dispatch(postRecipe(data));
         alert("Recipe create!");
         setData({
@@ -51,7 +81,28 @@ export default function RecipeCreate(){
             diets:[],
         })
         history.push("/home")
+      }
     }
+
+    // function handleSubmit(event){
+    //     if(data.title && data.summary){
+    //         event.preventDegault();
+    //         dispatch(postRecipe(data));
+    //         alert("Recipe create!");
+    //         setData({
+    //         title:"",
+    //         summary:"",
+    //         score:"",
+    //         healthScore:"",
+    //         image:"",
+    //         steps:"",
+    //         diets:[],
+    //     })
+    //     history.push("/home")
+    //     }else{
+    //         alert("completa la informacion")
+    //     }
+    // }
 
     return(
         <div>
@@ -60,12 +111,16 @@ export default function RecipeCreate(){
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Title: </label>
-                    <input 
+                    <input
                     type="text"
                     value={data.title}
                     name = "title"
                     onChange={handleChange}
+                    // required 
                     />
+                    {errors.title && (
+                        <p style={{color: "red" , fontWeight: 700 , fontSize: 13}} >{errors.title}</p>
+                    )}
                 </div>
                 <div>
                     <label>Summary: </label>
@@ -74,7 +129,11 @@ export default function RecipeCreate(){
                     value={data.summary}
                     name="summary" 
                     onChange={handleChange}
+                    // required
                     />
+                    {errors.summary && (
+                        <p style={{color: "red" , fontWeight: 700 , fontSize: 13}} >{errors.summary}</p>
+                    )}
                 </div>
                 <div>
                     <label>Health Score: </label>
@@ -83,6 +142,7 @@ export default function RecipeCreate(){
                     name="healthScore"
                     onChange={handleChange}
                     />
+                    <p style={{color: "red" , fontWeight: 700 , fontSize: 13}}>{errors.healthScore}</p>
                 </div>
                 <div>
                     <label>Score: </label>
@@ -91,6 +151,7 @@ export default function RecipeCreate(){
                     name="score"
                     onChange={handleChange}
                     />
+                    <p style={{color: "red" , fontWeight: 700 , fontSize: 13}}>{errors.score}</p>
                 </div>
                 <div>
                     <label>Image(https format): </label>
@@ -101,6 +162,7 @@ export default function RecipeCreate(){
                     name="image"
                     onChange={handleChange}
                      />
+                     <p style={{color: "red" , fontWeight: 700 , fontSize: 13}}>{errors.image}</p>
                 </div>
                 <div>
                     <label>Instructions for the recipe steps: </label>
