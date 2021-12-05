@@ -2,20 +2,22 @@
 import {BrowserRouter ,Route, Switch} from "react-router-dom"
 import Home from "./components/Home";
 import LadingPage from "./components/LandingPage";
+import Detail from "./components/Detail";
 import RecipeCreate from "./components/RecipeCreate"
 
 
 function App() {
   return (
-    // <BrowserRouter>
+    <BrowserRouter>
     <div>
-      {/* <Switch> */}
+      <Switch>
       <Route exact path="/" component = {LadingPage} />
-      <Route path ="/home" component ={Home} />
+      <Route exact path ="/home" component ={Home} />
+      <Route exact path="/home/:id" component={Detail} />
       <Route path="/recipe" component={RecipeCreate} />
-      {/* </Switch> */}
+      </Switch>
     </div>
-    // {/* </BrowserRouter> */}
+    </BrowserRouter>
   );
 }
 

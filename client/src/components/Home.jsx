@@ -95,14 +95,15 @@ export default function Home(){
                 // console.log(a.diets)
                 // console.log(a.id)
                     return( // aca empiezo para renderizar Card
+                    <div key={a.id} >
                      <Link to={`/home/${a.id}`}> {/*   */}
                         <Card title={a.title} 
                         image={a.image}
-                        key={a.id} 
                         diets={a.diets.map(d => ` ${d.name} `)}
                         // diets={a.diets.map(d => <p key={d.name}>{d.name}</p> )}
                         />
                      </Link>
+                    </div> 
                         )
                     }) }
             </div>

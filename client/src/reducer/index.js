@@ -1,9 +1,10 @@
-import {GET_RECIPES, GET_DIETS, FILTER_DIETS, ORDER_BY_TITLE, ORDER_BY_SCORE , GET_NAME_RECIPE, POST_RECIPE} from "../actions/types"
+import {GET_RECIPES, GET_DIETS, FILTER_DIETS, ORDER_BY_TITLE, ORDER_BY_SCORE , GET_NAME_RECIPE, POST_RECIPE, GET_DETAIL} from "../actions/types"
 
 const  initialState ={
     recipes:[],
     copyRecipes:[], 
     diets:[],
+    detail:[],
 }
 
 function reducer(state=initialState,{type , payload} ){
@@ -28,7 +29,14 @@ function reducer(state=initialState,{type , payload} ){
                 recipes: payload,
             }
 
-        case POST_RECIPE: // post para crear receta
+        case GET_DETAIL: // get para mostrar detalle por id
+            return{
+                ...state,
+                detail: payload,
+            }
+
+
+        case POST_RECIPE: // post para crear una receta
             return{
                 ...state
             }

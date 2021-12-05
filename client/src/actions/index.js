@@ -1,4 +1,4 @@
-import {GET_RECIPES , GET_DIETS, FILTER_DIETS, ORDER_BY_TITLE , ORDER_BY_SCORE , GET_NAME_RECIPE, POST_RECIPE} from "./types"
+import {GET_RECIPES , GET_DIETS, FILTER_DIETS, ORDER_BY_TITLE , ORDER_BY_SCORE , GET_NAME_RECIPE, POST_RECIPE , GET_DETAIL} from "./types"
 import axios from "axios"; // importo axios
 
 
@@ -37,14 +37,32 @@ export function getNameRecipe(name){ // get para buscar por nombre de la receta
     }
 }
 
-export function postRecipe(payload){ // post para crear la receta
+export function getDetail(id){ // get para mostrar detalle de la receta por id
     return async function(dispatch){
-        const json = await axios.post("http://localhost:3001/recipe",payload);
-        return json
+        try{
+            const json = await axios.get(`http://localhost:3001/recipes/${id}`);
+            return dispatch({
+                type: GET_DETAIL,
+                payload :json.data,
+            })
+        }catch(error){
+            alert("you cannot enter this recipe") // sale una alerta si no se puede ver la receta
+            console.log(error)
+        }
     }
 }
 
-export function filterDiets(payload){
+export function postRecipe(payload){ // post para crear la receta
+    return async function(dispatch){
+        const json = await axios.post("http://localhost:3001/recipe",payload);
+        return dispatch({
+            type: POST_RECIPE,
+            json
+        })
+    }
+}
+
+export function filterDiets(payload){ // filtrar por tipo de dieta
     // console.log(payload)
     return{
         type: FILTER_DIETS,
@@ -52,14 +70,14 @@ export function filterDiets(payload){
     }
 }
 
-export function orderByTitle(payload){ 
+export function orderByTitle(payload){  // ordeanar de A-Z or Z-A
     return{
         type: ORDER_BY_TITLE,
         payload,
     }
 }
 
-export function orderByScore(payload){
+export function orderByScore(payload){ // ordenar de menor a mayor o viceversa
     return{
         type: ORDER_BY_SCORE,
         payload,

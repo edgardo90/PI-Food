@@ -4,12 +4,13 @@ import {postRecipe , getDiets} from "../actions/index"
 import {useDispatch , useSelector} from "react-redux"
 
 
-function validate(input){
+function validate(input){ // funcion para validar errores
     const errors={};
     if(!input.title){
         errors.title="You must enter a title"
-    }else if ( !/^[A-Z]+$/i.test(input.title)){
+    }else if ( !/[A-Z\s]+$/i.test(input.title)){
         errors.title = "The title has to be only letters"
+        // /^[A-Z]+$/i
     }
     if(!input.summary){
         errors.summary="You must enter a summary"
@@ -32,7 +33,7 @@ function validate(input){
 export default function RecipeCreate(){
     const dispatch = useDispatch();
     const history = useHistory()
-    const totalDiets = useSelector(state =>state.diets);
+    const totalDiets = useSelector(state =>state.diets); // va a tener todas las dietas
 
     const [data , setData] = useState({
         title:"",
@@ -45,7 +46,7 @@ export default function RecipeCreate(){
     });
     const [errors, setErrors] = useState({});
 
-    useEffect (()=>{ // useeffect del get de dietas para tener todos las dietas
+    useEffect (()=>{ // useeffect del get de dietas 
         dispatch(getDiets());
     },[dispatch]);
 
@@ -68,12 +69,19 @@ export default function RecipeCreate(){
         })
     }
 
-     function handleSubmit(event){
+    function handleDelete(event){
+        setData({
+            ...data,
+            diets: data.diets.filter(d => d !== event)
+        })
+    }
+
+     function handleSubmit(event){ // handle para enviar(submit) la receta que quiero crear
         event.preventDefault();
-        if(!data.title || !data.summary){
+        if(!data.title || !data.summary){ // tira una alerta si no hay title and summary
             return alert("Complete the title and summary information")
         }
-        if(Object.values(errors).length > 0){
+        if(Object.values(errors).length > 0){ // tira una alerta si hay  errores
             return alert("Check the errors that are in red !")
         }
         dispatch(postRecipe(data));
@@ -109,6 +117,7 @@ export default function RecipeCreate(){
                         <p style={{color: "red" , fontWeight: 700 , fontSize: 13}} >{errors.title}</p>
                     )}
                 </div>
+                <br />  {/* dejo un espacio  */}
                 <div>
                     <label>Summary: </label>
                     <input 
@@ -122,6 +131,7 @@ export default function RecipeCreate(){
                         <p style={{color: "red" , fontWeight: 700 , fontSize: 13}} >{errors.summary}</p>
                     )}
                 </div>
+                <br />
                 <div>
                     <label>Health Score: </label>
                     <input type="number" // para que sea solo numeros el type es number
@@ -153,6 +163,7 @@ export default function RecipeCreate(){
                 </div>
                 <div>
                     <label>Instructions for the recipe steps: </label>
+                    <br />
                     <textarea
                     type="text"
                     placeholder="Instructions..."
@@ -163,19 +174,28 @@ export default function RecipeCreate(){
                     />
                 </div>
                 <div>
+                    <br />
                     <select onChange={handleSelect}>
-                        <option value="select">Select type/S of diets</option>
-                        {totalDiets && totalDiets.map(a =>{
+                        <option value="select">Select type/s of diets</option>
+                        {totalDiets && totalDiets.map(t =>{
                             return(
-                                <option value={a.name} key={a.id}>{a.name}</option>
+                                <option value={t.name} key={t.id}>{t.name}</option>
                             )
                         })}
                     </select>
                 </div>
-                <ul><li>{  data.diets.map(d => d+"  ,") }</li> </ul>
-
-                <button disabled={!data.title}  type="submit">Create recipe</button>
+                {/* <ul> <li>{  data.diets.map(d => d!=="select" && d+"  ,") }</li> </ul> */} {/*muestra las dietas que agrego  */}
+                <button disabled={!data.title} type="submit">Create recipe</button>
             </form>
+            <br />
+            {data.diets.map(d =>{
+                return(
+                <div>
+                    <li key={parseInt(d)} >Aggregate diet: {d} <button onClick={()=> handleDelete(d)}>X</button></li>
+                </div>
+                )
+            })}
+
         </div>
     )
 
