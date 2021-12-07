@@ -1,0 +1,50 @@
+.home{
+    margin: 0;
+    /* background-color: rgb(54, 6, 38); */
+    /* background-image: url('https://images.unsplash.com/photo-1495195129352-aeb325a55b65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1510&q=80'); */
+    width: 100%;
+    height: auto;
+    position: absolute;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.h1{
+    text-align: center;
+    margin-top: 10%;
+    color: rgb(235, 233, 211)  ;
+  } 
+
+.select{
+    height: 80px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(212, 188, 160, 0.705);
+    display: flex;
+    position: fixed;
+    justify-content:space-between;
+    align-items: center;
+    box-sizing: border-box;
+    z-index: auto
+}
+
+.paginado{
+    /* display: flex; */
+    padding-top: 10px; /*agrando el button hacia arriba  */
+    padding-bottom: 10px; /* agrando el button hacia abajo */
+    margin-left: 40%;/*muevo el button hacia la derecha  */
+}
+
+.cards{
+    justify-content:center;
+  max-width: 20%;
+  display: inline-block;
+  margin-left: 10%;
+  margin-right:5%;
+  margin-bottom: 5%;
+  
+}
+

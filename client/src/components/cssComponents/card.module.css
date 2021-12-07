@@ -1,0 +1,60 @@
+.card{
+    border: 1px solid rgb(146, 146, 146);
+    box-sizing: border-box;
+    color: rgba(255, 254, 254, 0.993);
+    display: inline-block;
+    margin: 2%;
+    padding: 1em;
+    vertical-align: top;
+    width: 33,5%;
+    
+  
+}
+
+/* .nuevo{
+    margin: 7% auto;
+    width: 300px;
+    height: 300px;
+    padding-bottom: 60%;
+    padding-top: 40%;
+    padding-left: 10%;
+    padding-right: 10%;
+    box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22);
+    border-radius: 40px;
+    cursor: pointer;
+    transition: 0.4s;
+} */
+
+.title{   /* cambio el formato del titulo  */
+    color: #fff; 
+    text-align: center; /* centro el texto  */
+    border-radius: 0px 0px 40px 40px;
+    font-family: 'Cookie', cursive;
+    font-size: 22px;
+    /* font-weight: bold; */
+    /* margin-top: -35%; */
+    /* height: 60px; */
+    /* margin-bottom: 10%; */
+}
+
+
+.imagen{
+    width: 100%;;
+    height: 100%;
+    justify-content: center;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+
+.dietas{  /* cambio el formato de las dietas  */
+    color: #fff;
+    text-align: center;
+    border-radius: 0px 0px 40px 40px;
+    font-family: 'Cookie', cursive;
+    font-weight: bold;
+    font-size: 14px;
+    margin: 1%;
+    height: 12%;
+}
+

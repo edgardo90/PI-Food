@@ -7,7 +7,7 @@ function LadingPage(){
     return(
         <div className={styles.landing}>
             <h1 className={styles.h1}>Welcome to my food app</h1>
-            <Link to="/home" > <button   className={styles.btn}>Login</button> </Link>
+            <Link to="/home" > <button  className={styles.btn} >Login</button> </Link>
         </div>
     )
 }

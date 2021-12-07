@@ -2,6 +2,7 @@ import React, {useState, useEffect}from "react";
 import{Link, useHistory} from "react-router-dom"
 import {postRecipe , getDiets} from "../actions/index"
 import {useDispatch , useSelector} from "react-redux"
+import styles from "../components/cssComponents/Recipe.module.css"
 
 
 function validate(input){ // funcion para validar errores
@@ -102,9 +103,9 @@ export default function RecipeCreate(){
     return(
         <div>
             <Link to="/home"><button>Back to</button></Link>
-            <h1>Create you recipe</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
+            <h1 className={styles.titulo} >Create you recipe</h1>
+            <form className={styles.formulario} onSubmit={handleSubmit}>
+                <div >
                     <label>Title: </label>
                     <input
                     type="text"
@@ -120,11 +121,13 @@ export default function RecipeCreate(){
                 <br />  {/* dejo un espacio  */}
                 <div>
                     <label>Summary: </label>
-                    <input 
+                    <br />
+                    <textarea
                     type="text"
                     value={data.summary}
                     name="summary" 
                     onChange={handleChange}
+                    style={{width: 400}}
                     // required
                     />
                     {errors.summary && (
@@ -185,13 +188,15 @@ export default function RecipeCreate(){
                     </select>
                 </div>
                 {/* <ul> <li>{  data.diets.map(d => d!=="select" && d+"  ,") }</li> </ul> */} {/*muestra las dietas que agrego  */}
+                <br />
+
                 <button disabled={!data.title} type="submit">Create recipe</button>
             </form>
             <br />
             {data.diets.map(d =>{
                 return(
-                <div>
-                    <li key={parseInt(d)} >Aggregate diet: {d} <button onClick={()=> handleDelete(d)}>X</button></li>
+                <div className={styles.eleminar} >
+                    <li key={parseInt(d)} >Aggregate diet: {d} <button className={styles.btn} onClick={()=> handleDelete(d)}>X</button></li>
                 </div>
                 )
             })}

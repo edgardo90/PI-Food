@@ -4,9 +4,9 @@ import {useDispatch , useSelector} from "react-redux"; // son Hooks de redux
 import {getDiets, getRecipes, filterDiets, orderByTitle, orderByScore} from "../actions";
 import {Link} from "react-router-dom"
 import Card from "./Card"; 
-// import { Fragment } from "react";
 import Paginado from "./Paginado"
 import SearchBar from "./SearchBar";
+import styles from "../components/cssComponents/Home.module.css"
 
 export default function Home(){
     const dispatch = useDispatch();
@@ -59,18 +59,21 @@ export default function Home(){
 
     // console.log(allDiets)
     return(
-        <div>
-            <Link to= "/recipe">Create recite</Link>
-            <h1>Food</h1>
-            <button onClick={event => {handleClick(event)}} >Reload recites</button> {/* recargo la pagina  */}
+        <div className={styles.home} >
+            {/* <Link to= "/recipe">Create recite</Link> */}
+
+            <h1 className={styles.h1} >Food</h1>
             <div>
+                <div className={styles.select} >
+                <button onClick={event => {handleClick(event)}} >Reload recites</button> {/* recargo la pagina  */}
+                <Link to= "/recipe">Create recite</Link>
                 <select onChange={event => handleFilterDiets(event) } >
                     <option  value="All">All diets</option>
                     {allDiets && allDiets.map(a =>{ // utilizo allDiets  para rendirizar todas las dietas de las base de datos para filtrar
                         return(
                             <option value={a.name} key={a.id}>{a.name}</option>
-                        )
-                    })}
+                            )
+                        })}
                 </select>
                 <select onChange={event => handleSortTitle(event)} >
                     <option label="Order by name" value="default"></option>
@@ -82,21 +85,16 @@ export default function Home(){
                     <option value="may" >Descending</option>
                     <option value="men" >Ascendant</option>Descending
                 </select>
-
-                <Paginado // traigo Paginado.jsx para renderizar
-                recipesPerPage ={recipesPerPage} // paso el estado que creee arriba
-                allRecipes={allRecipes.length} // aca paso el largo de todas las recetas 
-                paginado= {paginado} // paso la const paginado que cree arriba  
-                />
-
                 <SearchBar/>
+                </div>
 
+                <div className={styles.cards}  >
                 { currentRecites && currentRecites.map(a =>{ // si hay currentRecites  hago un map para que renderize los componentes que quiero mostrar
                 // console.log(a.diets)
                 // console.log(a.id)
-                    return( // aca empiezo para renderizar Card
+                return( // aca empiezo para renderizar Card
                     <div key={a.id} >
-                     <Link to={`/home/${a.id}`}> {/*   */}
+                     <Link to={`/home/${a.id}`} className={styles.card} > {/*   */}
                         <Card title={a.title} 
                         image={a.image}
                         diets={a.diets.map(d => ` ${d.name} `)}
@@ -106,7 +104,19 @@ export default function Home(){
                     </div> 
                         )
                     }) }
+                </div>
             </div>
+
+            <div className={styles.paginado} >
+                <footer>
+            <Paginado // traigo Paginado.jsx para renderizar
+                recipesPerPage ={recipesPerPage} // paso el estado que creee arriba
+                allRecipes={allRecipes.length} // aca paso el largo de todas las recetas 
+                paginado= {paginado} // paso la const paginado que cree arriba  
+                />
+                </footer>
+             </div>
+
         </div>
     )
 

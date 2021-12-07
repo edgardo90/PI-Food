@@ -1,11 +1,11 @@
-/* .landing  {
+body  {
   background-image: url(https://www.wallpapertip.com/wmimgs/50-504393_background-food-images-hd.jpg);
   background-repeat: no-repeat; 
   background-size: cover;
-  position: absolute;
-  margin: 0;
+  /* position: absolute; */
+  /* margin: 0; */
   background-attachment: fixed
-} */
+}
 
 
 
@@ -16,7 +16,7 @@
 } 
 
 .landing button{
-    position: absolute;
+    position: absolute; /*  */
     
     display: flex;
     padding-left: 25px;/* agrando el button hacia la izquierda  */
@@ -32,4 +32,10 @@
   border: none;
   border-radius: 7px;
 }
+
+.btn:hover{  /* cuando toco el button cambia */
+  background-color:rgb(231, 204, 158);
+  color:white;
+}
+
 

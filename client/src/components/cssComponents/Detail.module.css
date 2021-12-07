@@ -1,0 +1,84 @@
+.title{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    font-size: 50px;
+    color: #fff;
+    font-family: 'Cookie', cursive;
+}
+
+.imagen{
+    width: 400px;
+    height: 300px;
+    margin-left: 37%;
+    border-radius: 10px;
+}
+
+.dish{
+    display: flex;
+    justify-content: center;
+    color:#fff;
+    padding: 10px;
+    font-size: 16px;
+    margin-left: 35%;
+    margin-right: 35%;
+    font-family: 'Cookie', cursive;
+    box-shadow: 2px 2px 2px 2px rgb(93, 92, 92);
+    border-radius: 8px;
+}
+
+
+.diets{
+    display: flex;
+    justify-content: center;
+    color:#fff;
+    padding: 10px;
+    font-size: 16px;
+    margin-left: 35%;
+    margin-right: 35%;
+    font-family: 'Cookie', cursive;
+    box-shadow: 2px 2px 2px 2px rgb(93, 92, 92);
+    border-radius: 8px;
+}
+
+.score{
+    margin-left: 2%;
+    color:rgb(255, 255, 255);
+    font-size: 16px;
+    font-family: 'Cookie', cursive;
+}
+
+.healt{
+    margin-left: 2%;
+    color:rgb(255, 255, 255);
+    font-size: 16px;
+    font-family: 'Cookie', cursive;
+}
+
+.summary{
+    margin-left: 2%;
+    color:rgb(255, 255, 255);
+    font-size: 16px;
+    font-family: 'Cookie', cursive;
+}
+
+.Psummary{
+    margin-left: 2%;
+    color:rgb(255, 255, 255);
+    font-size: 14px;
+    font-family: 'Cookie', cursive;
+}
+
+.steps{
+    margin-left: 2%;
+    color:rgb(255, 255, 255);
+    font-size: 16px;
+    font-family: 'Cookie', cursive;
+}
+
+.Psteps{
+    margin-left: 2%;
+    color:rgb(255, 255, 255);
+    font-size: 14px;
+    font-family: 'Cookie', cursive;
+}
