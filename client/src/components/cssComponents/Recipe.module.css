@@ -46,3 +46,35 @@ body  {
       border:solid;
   }
 
+  .select{
+    display: flex;
+    padding-left: 25px;/* agrando el button hacia la izquierda  */
+    padding-right: 25px; /* agrando el button hacia la derecha */
+    padding-top: 5px; /*agrando el button hacia arriba  */
+    padding-bottom: 5px; /* agrando el button hacia abajo */
+    background-color: rgb(235, 233, 211);
+    border: none;
+    border-radius: 7px;
+  }
+
+  .select:hover{
+    background-color:rgb(231, 204, 158);
+    color:white;
+  }
+
+
+  .btnCreate{
+    padding-left: 25px;/* agrando el button hacia la izquierda  */
+    padding-right: 25px; /* agrando el button hacia la derecha */
+    padding-top: 5px; /*agrando el button hacia arriba  */
+    padding-bottom: 5px; /* agrando el button hacia abajo */
+    border: none;
+    border-radius: 7px;
+    margin-left: 30%;
+  }
+
+  .btnCreate:hover{
+    background-color:rgb(231, 204, 158);
+    color:white;
+  }
+

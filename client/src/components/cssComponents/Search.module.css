@@ -1,0 +1,28 @@
+.btn{
+    padding-left: 25px;/* agrando el button hacia la izquierda  */
+    padding-right: 25px; /* agrando el button hacia la derecha */
+    padding-top: 5px; /*agrando el button hacia arriba  */
+    padding-bottom: 5px; /* agrando el button hacia abajo */
+    background-color: rgb(235, 233, 211);
+    border: none;
+    border-radius: 7px;
+}
+
+.btn:hover{
+    background-color:rgb(231, 204, 158);
+    color:white;
+  }
+
+  .input{
+    padding-left: 25px;/* agrando el button hacia la izquierda  */
+    padding-right: 25px; /* agrando el button hacia la derecha */
+    padding-top: 5px; /*agrando el button hacia arriba  */
+    padding-bottom: 5px; /* agrando el button hacia abajo */
+    border: none;
+    border-radius: 7px;
+  }
+
+  input:hover{
+    background-color:rgb(235, 231, 225);
+    color:rgb(189, 75, 75);
+  }

@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getNameRecipe } from "../actions";
+import styles from "../components/cssComponents/Search.module.css"
 
 export default function SearchBar(){
     const dispacth = useDispatch();
@@ -21,13 +22,14 @@ export default function SearchBar(){
 
     return(
         <div>
-            <input 
+            <input
+            className={styles.input}
             type="text"
             placeholder="Search..."
             value={data}
             onChange = {handleChange}
              />
-             <button type="submit" onClick={handleSubmit}>Search</button>
+             <button type="submit"  className={styles.btn} onClick={handleSubmit}>Search</button>
         </div>
     )
 }

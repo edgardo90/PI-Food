@@ -60,14 +60,13 @@ export default function Home(){
     // console.log(allDiets)
     return(
         <div className={styles.home} >
-            {/* <Link to= "/recipe">Create recite</Link> */}
 
-            <h1 className={styles.h1} >Food</h1>
+            <h1 className={styles.h1} >Recipes food</h1>
             <div>
                 <div className={styles.select} >
-                <button onClick={event => {handleClick(event)}} >Reload recites</button> {/* recargo la pagina  */}
-                <Link to= "/recipe">Create recite</Link>
-                <select onChange={event => handleFilterDiets(event) } >
+                <button className={styles.btn} onClick={event => {handleClick(event)}} >Reload recites</button> {/* recargo la pagina  */}
+                <Link to= "/recipe"><button className={styles.btn} >Create you recipe</button></Link>
+                <select className={styles.btn}   onChange={event => handleFilterDiets(event) } >
                     <option  value="All">All diets</option>
                     {allDiets && allDiets.map(a =>{ // utilizo allDiets  para rendirizar todas las dietas de las base de datos para filtrar
                         return(
@@ -75,12 +74,12 @@ export default function Home(){
                             )
                         })}
                 </select>
-                <select onChange={event => handleSortTitle(event)} >
+                <select className={styles.btn} onChange={event => handleSortTitle(event)} >
                     <option label="Order by name" value="default"></option>
                     <option value="asc">A-Z</option>
                     <option value="des">Z-A</option>
                 </select>
-                <select onChange={event => handleSortHealtScore(event)} >
+                <select className={styles.btn} onChange={event => handleSortHealtScore(event)} >
                     <option label="Order by health score" value="default"></option>
                     <option value="may" >Descending</option>
                     <option value="men" >Ascendant</option>Descending

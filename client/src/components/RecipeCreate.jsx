@@ -101,7 +101,7 @@ export default function RecipeCreate(){
 
 
     return(
-        <div>
+        <div className= {styles.body}>
             <Link to="/home"><button>Back to</button></Link>
             <h1 className={styles.titulo} >Create you recipe</h1>
             <form className={styles.formulario} onSubmit={handleSubmit}>
@@ -178,7 +178,7 @@ export default function RecipeCreate(){
                 </div>
                 <div>
                     <br />
-                    <select onChange={handleSelect}>
+                    <select className={styles.select} onChange={handleSelect}>
                         <option value="select">Select type/s of diets</option>
                         {totalDiets && totalDiets.map(t =>{
                             return(
@@ -190,7 +190,7 @@ export default function RecipeCreate(){
                 {/* <ul> <li>{  data.diets.map(d => d!=="select" && d+"  ,") }</li> </ul> */} {/*muestra las dietas que agrego  */}
                 <br />
 
-                <button disabled={!data.title} type="submit">Create recipe</button>
+                <button disabled={!data.title} className={styles.btnCreate} type="submit">Create recipe</button>
             </form>
             <br />
             {data.diets.map(d =>{

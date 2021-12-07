@@ -19,7 +19,7 @@ export default function Detail(props){
 
     return(
         <div>
-            <Link to="/home"><button>Back to</button></Link>
+            <Link to="/home"><button className={styles.back}>Back to</button></Link>
             {
                 Object.values(myDetail).length > 0 ? // con esto convierto el obejto en array para saber si su largo es mayor a 0
                 <div>
@@ -39,7 +39,7 @@ export default function Detail(props){
                         <p className={styles.Psteps} >{myDetail.steps}</p>
                     </div>
 
-                </div> :  <p>cargando...</p> 
+                </div> : <  img src="https://i.pinimg.com/originals/50/7e/92/507e92e1d92210aac1a7130c8757a0dd.gif" alt="" style={{marginLeft:500, marginTop:100}} /> 
             } 
         </div>
     )

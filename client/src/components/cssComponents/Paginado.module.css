@@ -1,0 +1,14 @@
+.btn{
+    background-color: rgb(235, 233, 211);
+    border: none;
+    border-radius: 8px;
+    padding-left: 8px;/* agrando el button hacia la izquierda  */
+    padding-right: 8px; /* agrando el button hacia la derecha */
+    padding-top: 3px; /*agrando el button hacia arriba  */
+    padding-bottom: 3px; /* agrando el button hacia abajo */
+  }
+
+  .btn:hover{
+    background-color:rgb(231, 204, 158);
+    color:white;
+  }

@@ -1,4 +1,6 @@
 import React from "react";
+import styles from "../components/cssComponents/Paginado.module.css"
+
 
 export default function Paginado({  allRecipes, paginado,recipesPerPage  }){ // me traigo  allRecipes, paginado,recipesPerPage de Home.jsx , por destructuring
     const pageNumbers = [] 
@@ -14,7 +16,7 @@ export default function Paginado({  allRecipes, paginado,recipesPerPage  }){ // 
                 {pageNumbers && // si hay pageNUmbers que haga un map
                  pageNumbers.map(p =>{
                      return( // como es un map acordarse de poner un return
-                     <button key={p}  onClick={()=>paginado(p)}>{p}</button>
+                     <button key={p} className={styles.btn}  onClick={()=>paginado(p)}> {p} </button>
                      )
                  })}
             </ul>

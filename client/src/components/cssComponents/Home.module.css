@@ -15,7 +15,25 @@
     text-align: center;
     margin-top: 10%;
     color: rgb(235, 233, 211)  ;
-  } 
+    font-size: 50px;
+    font-family: 'Cookie', cursive;
+  }
+  
+  .btn{
+    display: flex;
+    padding-left: 25px;/* agrando el button hacia la izquierda  */
+    padding-right: 25px; /* agrando el button hacia la derecha */
+    padding-top: 5px; /*agrando el button hacia arriba  */
+    padding-bottom: 5px; /* agrando el button hacia abajo */
+    background-color: rgb(235, 233, 211);
+    border: none;
+    border-radius: 7px;
+  }
+
+  .btn:hover{
+    background-color:rgb(231, 204, 158);
+    color:white;
+  }
 
 .select{
     height: 80px;
@@ -33,9 +51,9 @@
 
 .paginado{
     /* display: flex; */
-    padding-top: 10px; /*agrando el button hacia arriba  */
-    padding-bottom: 10px; /* agrando el button hacia abajo */
-    margin-left: 40%;/*muevo el button hacia la derecha  */
+    /* display: inline-block;
+    justify-content:center; */
+    margin-left: 38%;/*muevo el button hacia la derecha  */
 }
 
 .cards{
@@ -44,7 +62,7 @@
   display: inline-block;
   margin-left: 10%;
   margin-right:5%;
-  margin-bottom: 5%;
+  margin-left: 40%;/*muevo el button hacia la derecha  */
   
 }
 
