@@ -88,21 +88,22 @@ export default function Home(){
                 </div>
 
                 <div className={styles.cards}  >
-                { currentRecites && currentRecites.map(a =>{ // si hay currentRecites  hago un map para que renderize los componentes que quiero mostrar
-                // console.log(a.diets)
+                { currentRecites.length >0 ? currentRecites.map(a =>{ // si hay currentRecites  hago un map para que renderize los componentes que quiero mostrar
+                console.log(a)
                 // console.log(a.id)
                 return( // aca empiezo para renderizar Card
                     <div key={a.id} >
                      <Link to={`/home/${a.id}`} className={styles.card} > {/*   */}
                         <Card title={a.title} 
                         image={a.image}
+                        healthScore={a.healthScore}
                         diets={a.diets.map(d => ` ${d.name} `)}
                         // diets={a.diets.map(d => <p key={d.name}>{d.name}</p> )}
                         />
                      </Link>
                     </div> 
                         )
-                    }) }
+                    }) : <h1>NO hay recetas para mostrar</h1> }
                 </div>
             </div>
 
