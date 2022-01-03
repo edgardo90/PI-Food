@@ -23,7 +23,7 @@ const getApiInfo = async () =>{
             healthScore : r.healthScore, // esto seria el nivel de comida saludable
             summary : r.summary, // esto seria el resumen del plato
             diets : r.diets.map(d =>{ // esto seria tipo de dieta
-                return {name: d } // va tener un objeto que "d" va ser el tipo de dieta
+                return {name: d } // va tener un objeto que "d" va ser el tipo de dieta , en si va ser un array de objetos . Tambien puede ser un array simple con sus diets 
             }),
             dishTypes : r.dishTypes.map(d =>{ // esto seria el tipo de plato
                 return {name : d }
@@ -47,7 +47,7 @@ const getDbInfo = async () =>{    //aca voy traer lo que guardo en la base de da
     })
 }
 
-const allData = async () =>{ // con esto creo una funcion que trae tadas las recetas lo que venga por la api de food
+const allData = async () =>{ // con esto creo una funcion que trae tadas las recetas lo que venga por la api de food y lo de la base datos
     const apiInfo = await getApiInfo();
     const dbInfo = await getDbInfo();
     const infoTotal = apiInfo.concat(dbInfo);
@@ -90,13 +90,13 @@ router.get("/types",async(req, res) =>{ // obtengo todas las dietas posibles y l
         return totalDiets.indexOf(element) === index;
     })
     // console.log(dietsFilter)
-    dietsFilter.push("vegetarian")
+    dietsFilter.push("vegetarian") // pusheo "vegetarian" porque no aparece en todas las diets pero si en documentacion de la api de food
     dietsFilter.forEach(t =>{ // hago un forEach para iterar cada elemento =>"t"
-        Diet.findOrCreate({ // traigo el modelo Diet.js , utilizo el findOrCreate() para crear el elemento en mi base de datos, si ya esta no lo crea
+        Diet.findOrCreate({ // traigo el modelo Diet.js , utilizo el findOrCreate() de squelize para crear el elemento en mi base de datos, si ya esta no lo crea
             where: {name : t} // creo el objeto where que tenga cada elemento => "t"
         })
     })
-    const allDiets = await Diet.findAll(); // guarda en "allDites" lo que esta en la tabla Diet.js con la funcion findall()
+    const allDiets = await Diet.findAll(); // guarda en "allDites" lo que esta en la tabla Diet.js con la funcion findall() de squelize
     return res.send(allDiets); 
 })
 
@@ -112,13 +112,13 @@ router.post("/recipe", async(req, res) =>{ // recibo los datos por body y lo gua
         if(!title || !summary){
             return res.status(404).send("Must have title and summary")
         }
-        if(!score){
+        if(!score){ // por default el puntaje va hacer 0
             score=0
         }
-        if(!healthScore){
+        if(!healthScore){ // por default el puntaje va hacer 0
             healthScore=0
         }
-    let recipeCreate = await Recipe.create({ // traigo mi models Recipe.js y usa la funcion create() para crear recipeCreate
+    let recipeCreate = await Recipe.create({ // traigo mi models Recipe.js y usa la funcion create()"de sequilize" para crear recipeCreate
         title, 
         summary, 
         steps,
@@ -127,7 +127,7 @@ router.post("/recipe", async(req, res) =>{ // recibo los datos por body y lo gua
         createdInDb,
         image,  
     });
-    let dietsDb = await Diet.findAll({ // aca busto todas las diets que coincidan con la tabla Diet
+    let dietsDb = await Diet.findAll({ // aca busto todas las diets que coincidan con la tabla Diet de mi base de datos , findAll() es de squelize
         where: {name: diets}
     })
     recipeCreate.addDiet(dietsDb); // agrego a la tabla Diet con addDiet lo que cree en dietsDb

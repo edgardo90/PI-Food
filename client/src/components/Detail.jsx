@@ -39,7 +39,7 @@ export default function Detail(props){
                         <p className={styles.Psteps} >{myDetail.steps}</p>
                     </div>
 
-                </div> : <  img src="https://i.pinimg.com/originals/50/7e/92/507e92e1d92210aac1a7130c8757a0dd.gif" alt="" style={{marginLeft:500, marginTop:100}} /> 
+                </div> : <  img src="https://i.pinimg.com/originals/50/7e/92/507e92e1d92210aac1a7130c8757a0dd.gif" alt="" style={{marginLeft:500, marginTop:100}} /> // muestra un gif cargando
             } 
         </div>
     )

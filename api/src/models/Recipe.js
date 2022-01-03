@@ -11,16 +11,16 @@ module.exports = (sequelize) => {
       primaryKey: true, 
     },
     title: { // este es mi nombre
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.STRING, // // es un string con maximo de 255 caracteres
+      allowNull: false, // en false para que sea obligatorio 
     },
     summary:{ // este es el "resumen del plato"
-      type: DataTypes.STRING,
+      type: DataTypes.STRING, 
       allowNull: false
     },
     steps:{ // este es el "paso a paso"
-      type: DataTypes.TEXT,
-      allowNull: true,
+      type: DataTypes.TEXT,// puede poner todos los caracteres que quiere
+      allowNull: true,  // pongo en true  para que no sea obligatorio poner algo
     },
     score:{ // este es la "puntuacion"
       type: DataTypes.INTEGER,
@@ -31,7 +31,7 @@ module.exports = (sequelize) => {
       allowNull: true,
     },
     image:{
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING(1234), // es un string con maximo de 1234 caracteres        
       allowNull: true
     },
     createdInDb:{ // con esto accede mas facil a la receta que cree en la base de tados(data base)
